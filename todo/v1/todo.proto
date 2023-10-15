@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package todo.v1;
+
+option go_package = "grpc_todo/gen/todo/v1;todov1";
+
+message ToDo {
+    string id = 1;
+    string title = 2;
+    ToDoStatus status = 3;
+}
+
+enum ToDoStatus {
+  TO_DO_STATUS_UNKNOWN_UNSPECIFIED = 0;
+  TO_DO_STATUS_CLOSE = 1;
+  TO_DO_STATUS_OPEN = 2;
+}
+
+message CreateToDoRequest {
+    string title = 1;
+}
+
+message CreateToDoResponse {
+    ToDo todo = 1;
+}
+
+message DeleteToDoRequest {
+    string id = 1;
+}
+
+message DeleteToDoResponse {
+    string id = 1;
+}
+
+message UpdateToDoRequest {
+    string id = 1;
+    ToDoStatus status = 2;
+}
+
+message UpdateToDoResponse {
+    ToDo todo = 1;
+}
+
+service ToDoService {
+    rpc CreateToDo(CreateToDoRequest) returns (CreateToDoResponse) {}
+    rpc DeleteToDo(DeleteToDoRequest) returns (DeleteToDoResponse) {}
+    rpc UpdateToDo(UpdateToDoRequest) returns (UpdateToDoResponse) {}
+}
